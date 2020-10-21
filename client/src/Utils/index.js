@@ -6,19 +6,19 @@ function GetData(data) {
     url: "https://rapidapi.p.rapidapi.com/auto-complete",
     params: { q: data, region: "US" },
     headers: {
-      "x-rapidapi-host": process.env.REACT_APP_HOST,
-      "x-rapidapi-key": process.env.REACT_APP_KEY,
+      "x-rapidapi-host": process.env.REACT_APP_API_HOST,
+      "x-rapidapi-key": process.env.REACT_APP_API_KEY,
     },
   };
 
   axios
     .request(options)
-    .then(({ data }) => {
-      console.log(data);
+    .then((data) => {
+      return data;
     })
     .catch((error) => {
       console.error(error);
     });
 }
 
-export { GetData };
+export default GetData;
