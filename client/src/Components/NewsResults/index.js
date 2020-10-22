@@ -10,7 +10,8 @@ function NewsResults({ data }) {
   const Summarize = (e) => {
     let data = SummarizeArticle(e.target.id);
     Promise.resolve(data).then((data) => {
-      setText(data.sentences[0] + "..");
+      console.log(data);
+      setText(data.sentences[0] + " " + data.sentences[1] + "..");
     });
   };
   useEffect(() => {

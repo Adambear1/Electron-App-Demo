@@ -1,18 +1,13 @@
 import axios from "axios";
 
-const SummarizeArticle = async (i) => {
+const GetTopGainers = async () => {
   const options = {
-    method: "POST",
-    url: "https://rapidapi.p.rapidapi.com/text-summarizer",
+    method: "GET",
+    url: "https://rapidapi.p.rapidapi.com/api/yahoo/ga/topgainers",
+    params: { start: "0" },
     headers: {
-      "content-type": "application/json",
-      "x-rapidapi-host": process.env.REACT_APP_NEWS,
+      "x-rapidapi-host": process.env.REACT_APP_TOP,
       "x-rapidapi-key": process.env.REACT_APP_KEY,
-    },
-    data: {
-      url: i,
-      text: "",
-      sentnum: 2,
     },
   };
 
@@ -28,4 +23,4 @@ const SummarizeArticle = async (i) => {
   return data;
 };
 
-export default SummarizeArticle;
+export default GetTopGainers;

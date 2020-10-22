@@ -1,18 +1,12 @@
 import axios from "axios";
 
-const SummarizeArticle = async (i) => {
+const BreakingNews = async () => {
   const options = {
-    method: "POST",
-    url: "https://rapidapi.p.rapidapi.com/text-summarizer",
+    method: "GET",
+    url: "https://rapidapi.p.rapidapi.com/api/yahoo/ne/news/AAPL",
     headers: {
-      "content-type": "application/json",
       "x-rapidapi-host": process.env.REACT_APP_NEWS,
       "x-rapidapi-key": process.env.REACT_APP_KEY,
-    },
-    data: {
-      url: i,
-      text: "",
-      sentnum: 2,
     },
   };
 
@@ -21,11 +15,11 @@ const SummarizeArticle = async (i) => {
     .then(({ data }) => {
       return data;
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.error(error);
     });
   const data = await response;
   return data;
 };
 
-export default SummarizeArticle;
+export { BreakingNews };

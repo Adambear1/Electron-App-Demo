@@ -8,6 +8,8 @@ import SidebarToggle from "./Components/SidebarToggle";
 import Sidebar from "./Components/Sidebar";
 import SidebarModal from "./Components/SidebarModal";
 import ModalContextProvider from "./Context/ModalContextProvider";
+import TopGainers from "./Components/TopGainers";
+import BreakingNews from "./Components/BreakingNews";
 
 function App() {
   const [value, setValue] = useState({});
@@ -28,6 +30,8 @@ function App() {
     <div className="container">
       <SidebarToggle />
       <Search search={search} setValue={setValue} />
+      <TopGainers />
+      <BreakingNews />
       <ModalContextProvider>
         <SidebarModal />
         <Sidebar />

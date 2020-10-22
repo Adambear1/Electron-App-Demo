@@ -19,6 +19,7 @@
     "electron": "^10.1.4",
     "electron-builder": "^22.9.1",
     "electron-is-dev": "^1.2.0",
+    "promise-status-async": "^1.1.11",
     "react": "^16.14.0",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.14.0",
