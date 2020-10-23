@@ -35,3 +35,12 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  .saved-modal span{
+    right: 0px !important
+  }
+  .saved-modal span:hover{
+    cursor: pointer;
+    background-color: rgb(184, 184, 184);
+    border-radius: 50%;
+  }

@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 var firebaseConfig = {
-  apiKey: "AIzaSyBSbjwxQBOfQKibRR64JZHE_7KzJWWdKu0",
+  apiKey: process.env.REACT_APP_FIREDB,
   authDomain: "fir-electron-stocks.firebaseapp.com",
   databaseURL: "https://fir-electron-stocks.firebaseio.com",
   projectId: "fir-electron-stocks",
@@ -12,4 +12,4 @@ var firebaseConfig = {
 // Initialize Firebase
 let firebaseDB = firebase.initializeApp(firebaseConfig);
 
-export default firebaseDB.database().ref();
+export default firebaseDB.database();

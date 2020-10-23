@@ -18,10 +18,10 @@ function Sidebar() {
   return (
     <div
       id="mySidenav"
-      class="sidenav"
+      className="sidenav"
       style={{ zIndex: 200, textAlign: "center" }}
     >
-      <a href="javascript:void(0)" class="closebtn" onClick={closeNav}>
+      <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
         &times;
       </a>
       <button
@@ -31,11 +31,24 @@ function Sidebar() {
         }}
         id="myBtn"
         name="savedArticles"
-        class="btn btn-light"
+        className="btn btn-light my-3"
         data-toggle="modal"
         data-target="#exampleModal"
       >
         Saved Articles
+      </button>
+      <button
+        onClick={(e) => {
+          setValue({ value: e.target.name });
+          closeNav();
+        }}
+        id="myBtn"
+        name="savedStocks"
+        className="btn btn-light my-3"
+        data-toggle="modal"
+        data-target="#exampleModal"
+      >
+        Saved Stocks
       </button>
     </div>
   );

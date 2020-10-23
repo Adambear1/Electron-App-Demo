@@ -21,6 +21,7 @@ function Finances() {
   const [loading, setLoading] = useState(null);
   const search = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     //
     let data = GetData(value);
@@ -34,6 +35,9 @@ function Finances() {
       setLoading(false);
     });
   };
+  {
+    // console.log(data );
+  }
   return (
     <div className="container">
       <SidebarToggle />
@@ -50,7 +54,7 @@ function Finances() {
         <Spinner center={true} />
       ) : (
         <>
-          <NewsResults data={data.news} />
+          <NewsResults data={data.news} name={data.quotes} />
           <SMAResults data={chart["Technical Analysis: SMA"]} />
           <FinanceResults data={data.quotes} />
         </>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ArticleLookUp } from "../../Utils/ArticleLookUp";
+import firebaseDB from "../../Config";
 
 const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
   const pageNumbers = [];
@@ -32,18 +33,39 @@ function Archives() {
 
   const searchArticles = async (e) => {
     e.preventDefault();
-    console.log(articles);
     let search = ArticleLookUp(articles);
     let data = await Promise.resolve(search).then(({ response }) => {
       const { docs } = response;
-      console.log(docs);
       setPosts(docs);
     });
+  };
+  const formatTime = (e) => {
+    console.log(e);
+    let date = new Date(e);
+    console.log(date);
+    var year = date.getFullYear();
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : "0" + month;
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : "0" + day;
+    return year + month + day;
   };
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const saveArticle = (e) => {
+    e.preventDefault();
+    firebaseDB
+      .ref()
+      .child("saveArticles")
+      .push()
+      .set({
+        title: e.target.getAttribute("name"),
+        link: e.target.id,
+      });
+  };
 
   return (
     <div>
@@ -77,8 +99,10 @@ function Archives() {
           name="begin_date"
           label="Begin Date"
           onChange={(e) => {
-            console.log(e.target.value);
-            // setArticles({ ...articles, [e.target.name]: e.target.value });
+            setArticles({
+              ...articles,
+              [e.target.name]: formatTime(e.target.value),
+            });
           }}
         />
         <input
@@ -86,13 +110,15 @@ function Archives() {
           name="end_date"
           label="End Date"
           onChange={(e) => {
-            setArticles({ ...articles, [e.target.name]: e.target.value });
+            setArticles({
+              ...articles,
+              [e.target.name]: formatTime(e.target.value),
+            });
           }}
         />
-
         <button
           type="submit"
-          className="btn btn-light"
+          className="btn btn-primary"
           onClick={searchArticles}
         >
           Search
@@ -115,6 +141,15 @@ function Archives() {
                       {"  "}({source})
                     </h5>
                     <p>{abstract}</p>
+                    <a className="mr-3">
+                      <small
+                        id={web_url}
+                        name={headline.main}
+                        onClick={saveArticle}
+                      >
+                        Save Article
+                      </small>
+                    </a>
                     <a href={web_url} target="_blank">
                       <small>Read More</small>
                     </a>

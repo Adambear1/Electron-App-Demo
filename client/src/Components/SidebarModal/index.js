@@ -4,49 +4,129 @@ import { ModalContext } from "../../Context/ModalContextProvider";
 import "./styles.css";
 function SidebarModal() {
   const { value, setValue } = useContext(ModalContext);
-  const [state, setState] = useState();
+  const [articles, setArticles] = useState();
+  const [stocks, setStocks] = useState();
+  const [title, setTitle] = useState();
+  const [crud, setCrud] = useState();
   useEffect(() => {
-    var modal = document.getElementById("myModal");
-    var span = document.getElementsByClassName("close")[0];
-    span.addEventListener("click", () => {
-      modal.style.display = "none";
-    });
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) {
+    try {
+      var modal = document.getElementById("myModal");
+      var span = document.getElementsByClassName("close")[0];
+      span.addEventListener("click", () => {
+        setValue("");
         modal.style.display = "none";
-      }
-    });
+      });
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          setValue("");
+          modal.style.display = "none";
+        }
+      });
+    } catch (error) {
+      console.log("");
+    }
   }, []);
   useEffect(() => {
+    console.log(value.value);
     switch (value.value) {
       case "savedArticles":
         savedArticles();
+        setTitle("Saved Articles");
+        return;
+      case "savedStocks":
+        savedStocks();
+        setTitle("Saved Stocks");
         return;
     }
-  }, [value]);
+  }, [value, crud]);
   function savedArticles() {
-    const data = async () => {
-      return firebaseDB.child("saveArticle").on("value", (snapshot) => {
-        console.log(snapshot.val());
-        return Promise.resolve(snapshot.val()).then((data) => {
-          console.log(data);
-          return setState({ ...state, data });
-        });
-      });
-    };
-    data();
-    setState({
-      title: "Articles Saved",
+    let arr = [];
+    firebaseDB.ref().on("value", (snapshot) => {
+      let obj = snapshot.val().saveArticles;
+      for (var key in obj) {
+        arr.push({ link: obj[key].link, title: obj[key].title, _id: key });
+      }
+      setArticles(arr);
     });
   }
+  function savedStocks() {
+    let arr = [];
+    firebaseDB.ref().on("value", (snapshot) => {
+      let obj = snapshot.val().saveStocks;
+      for (var key in obj) {
+        arr.push({ stock: obj[key].stock, _id: key });
+      }
+      setStocks(arr);
+    });
+  }
+  function deleteInput(e) {
+    setCrud(true);
+    firebaseDB
+      .ref("saveArticles/" + e.target.id)
+      .set(null)
+      .then((data) => {
+        setCrud(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>{state && state.title}</p>
-        <p>{state && state.data && state.data}</p>
-      </div>
-    </div>
+    <>
+      {articles ||
+        (stocks && (
+          <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              {title && <h1>{title}</h1>}
+              {articles &&
+                articles.map(({ link, title, _id }) => (
+                  <>
+                    <div class="card " key={_id}>
+                      <div class="card-body">
+                        <div class="row saved-modal">
+                          {" "}
+                          <a href={link} target="_blank">
+                            {title}
+                          </a>
+                          <span
+                            role="img"
+                            aria-label="delete"
+                            onClick={deleteInput}
+                            id={_id}
+                          >
+                            ❌
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ))}
+              {stocks &&
+                stocks.map(({ stock, _id }) => (
+                  <>
+                    <div class="card " key={_id}>
+                      <div class="card-body">
+                        <div class="row saved-modal">
+                          <a>{stock}</a>
+                          <span
+                            role="img"
+                            aria-label="delete"
+                            onClick={deleteInput}
+                            id={_id}
+                          >
+                            ❌
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ))}
+            </div>
+          </div>
+        ))}
+    </>
   );
 }
 
