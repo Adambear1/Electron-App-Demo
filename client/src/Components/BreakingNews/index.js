@@ -30,39 +30,42 @@ function BreakingNews() {
   const [postsPerPage] = useState(3);
   useEffect(() => {
     Promise.resolve(GetNews()).then((item) => {
-      console.log(item.item);
-      setPosts(item.item);
+      if (item) setPosts(item.item);
     });
   }, []);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  console.log(currentPosts && currentPosts);
+
   return (
     <>
-      <h1>Breaking News</h1>
-      <div className="breaking-news-container my-5">
-        {currentPosts &&
-          currentPosts.map(({ title, description, link, guid }) => {
-            return (
-              <div class="card not-complete-list-card" key={guid}>
-                <div class="card-body not-complete-list-title" id={guid}>
-                  <h5>{title}</h5>
-                  <p>{description}</p>
-                  <a href={link} target="_blank">
-                    <small>Read More</small>
-                  </a>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={posts.length}
-        paginate={paginate}
-      />
+      {currentPosts.length > 1 && (
+        <>
+          <h1>Breaking News</h1>
+          <div className="breaking-news-container my-5">
+            {currentPosts &&
+              currentPosts.map(({ title, description, link, guid }) => {
+                return (
+                  <div class="card not-complete-list-card" key={guid}>
+                    <div class="card-body not-complete-list-title" id={guid}>
+                      <h5>{title}</h5>
+                      <p>{description}</p>
+                      <a href={link} target="_blank">
+                        <small>Read More</small>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={posts.length}
+            paginate={paginate}
+          />
+        </>
+      )}
     </>
   );
 }

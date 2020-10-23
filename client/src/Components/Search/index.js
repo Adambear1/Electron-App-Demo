@@ -18,6 +18,7 @@ function Search({ search, setValue }) {
             setValue(e.target.value);
           }}
         />
+
         <div class="input-group-append">
           <button type="submit" className="btn btn-secondary" onClick={search}>
             Search

@@ -10,7 +10,7 @@ function FinanceChart({ data, name }) {
           options={{
             title: {
               display: true,
-              text: "Average Scores for " + name,
+              text: name,
               fontSize: 25,
             },
             legend: {

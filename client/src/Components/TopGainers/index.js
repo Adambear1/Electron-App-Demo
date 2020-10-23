@@ -20,6 +20,7 @@ function TopGainers() {
               <a
                 href={`https://finance.yahoo.com/quote/${symbol}?p=${symbol}`}
                 target="_blank"
+                key={symbol}
               >
                 {displayName}
                 {"   "}

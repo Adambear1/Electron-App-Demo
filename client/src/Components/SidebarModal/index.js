@@ -39,7 +39,6 @@ function SidebarModal() {
       title: "Articles Saved",
     });
   }
-  console.log(state && state.data);
   return (
     <div id="myModal" class="modal">
       <div class="modal-content">

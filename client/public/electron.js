@@ -3,7 +3,7 @@ const path = require("path");
 const isDev = require("electron-is-dev");
 
 function createWindow() {
-  const win = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -11,7 +11,7 @@ function createWindow() {
     },
   });
 
-  win.loadURL(
+  mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`

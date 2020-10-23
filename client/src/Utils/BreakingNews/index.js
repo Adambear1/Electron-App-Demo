@@ -5,7 +5,7 @@ const BreakingNews = async () => {
     method: "GET",
     url: "https://rapidapi.p.rapidapi.com/api/yahoo/ne/news/AAPL",
     headers: {
-      "x-rapidapi-host": process.env.REACT_APP_NEWS,
+      "x-rapidapi-host": process.env.REACT_APP_TOP,
       "x-rapidapi-key": process.env.REACT_APP_KEY,
     },
   };

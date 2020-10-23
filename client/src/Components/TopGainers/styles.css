@@ -16,3 +16,25 @@ div.scrollmenu {
   div.scrollmenu a:hover {
     background-color: #777;
   }
+
+  /* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  width: 2px;
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  width: 2px;
+  background: rgba(44, 44, 44,.5);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(44, 44, 44,.5); 
+}
